@@ -1,6 +1,8 @@
 hello world
-This
-is
-a 
+That
+was
+an
+old
+world
 new 
 file
