@@ -20,11 +20,20 @@
 					<div class="col-md-1"></div>
 					<div class="col-md-1"></div>
 					<div class="col-md-1"></div>
-					<div class="col-md-4" style="color:green;">
+					<div class="col-md-4" style="">
 						Hello <?php echo $_SESSION['user_info'][0]['username']; ?>  welcome to your dashboard
 						<br />
 						<a href="controller.php?action=logout">Logout</a>
-
+						<br />
+						<br />
+						<br />
+						<div class="well">
+							<form method="POST" action="controller.php?action=update">
+								<input type="text" name="first_name" placeholder="First Name" /> <br />
+								<input type="text" name="last_name" placeholder="Last Name" /> <br />
+								<input type="submit" value="Submit" class="btn btn-primary" />
+							</form>
+						</div>
 					</div>
 					<div class="col-md-4"></div>
 				</div>

@@ -56,6 +56,33 @@ switch ($action) {
 		unset($_SESSION['user_info']);
 		header('Location:controller.php?action=login');
 		break;
+	case 'update':
+		
+		// Check if the user is logged in
+		$logged_in = isset($_SESSION['user_info'][0]) && is_numeric($_SESSION['user_info'][0]['id']) ? true : false;
+
+		if(!$logged_in) {
+			header('Location:controller.php?action=login');
+		}
+		
+		//echo '<pre>'; print_r($_SESSION['user_info'][0]['id']); die;
+		// This will come up only if the user is already logged in
+		if($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$id = $_SESSION['user_info'][0]['id'];
+			$first_name = utility::check_var('first_name');
+			$last_name = utility::check_var('last_name');
+			
+			if(!empty($first_name) && !empty($last_name)) {
+				$data = array(
+					'first_name' => $first_name,
+					'last_name' => $last_name
+						);
+				if($mysql->update('users', $data, "`id` = $id")) {
+					header('Location:controller.php?action=dashboard');
+				}
+			}
+		}
+		break;
 	default:
 		break;
 }

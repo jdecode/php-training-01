@@ -18,7 +18,7 @@ abstract class database {
 		
 	}
 	
-	function update() {
+	function update($table) {
 		
 	}
 	
