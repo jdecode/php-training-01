@@ -35,7 +35,19 @@
 								<a href="controller.php?action=update_profile">Update Profile</a>
 							</li>
 						</ul>
-						
+						<div class="well">
+							<form method="POST" action="controller.php?action=update" enctype="multipart/form-data">
+								<input type="text" name="first_name" value="<?php echo $_SESSION['user_info'][0]['first_name']; ?>" placeholder="First Name" /> <br />
+								<input type="text" name="last_name" value="<?php echo $_SESSION['user_info'][0]['last_name']; ?>" placeholder="Last Name" /> <br />
+								<input type="file" name="image1" />
+								<input type="submit" value="Update" class="btn btn-primary" />
+							</form>
+						</div>
+						<style>
+							input {
+								margin: 5px;
+							}
+						</style>
 					</div>
 					<div class="col-md-4"></div>
 				</div>

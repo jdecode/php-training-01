@@ -69,6 +69,43 @@ switch ($action) {
 		// This will come up only if the user is already logged in
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$id = $_SESSION['user_info'][0]['id'];
+
+			//utility::pr($_POST);
+			//utility::pr($_FILES); die;
+			$image = $_FILES['image1'];
+			$is_image_file_correct = false;
+			$_uploaded = false;
+			
+			//Check the image for any error while uploading
+			if($image['error'] == 0) {
+			
+				// Check if the image is of type "image" only
+				if(strstr($image['type'], 'image')) {
+
+					// Check if the image is under 10MB
+					$mb10 = 10*1024*1024;
+					if($image['size'] < $mb10) {
+						$is_image_file_correct = true;
+					}
+				}
+			}
+			
+			if($is_image_file_correct) {
+				// Upload the file in a directory
+				$file_name = rand(100,999).'-'.rand(100000,999999).'-'.$image['name'];
+				if(move_uploaded_file($image['tmp_name'], 'images_for_dashboard/'.$file_name)) {
+					$_uploaded = true;
+				}
+				// Update the image name in user_details table
+			}
+			
+			// If the file has been uploaded successfully, insert the file name in database
+			if($_uploaded) {
+				
+			}
+
+
+			// Update first name and last name, in users table
 			$first_name = utility::check_var('first_name');
 			$last_name = utility::check_var('last_name');
 			
@@ -78,9 +115,22 @@ switch ($action) {
 					'last_name' => $last_name
 						);
 				if($mysql->update('users', $data, "`id` = $id")) {
+					$_SESSION['user_info'][0]['first_name'] = $first_name;
+					$_SESSION['user_info'][0]['last_name'] = $last_name;
 					header('Location:controller.php?action=dashboard');
 				}
 			}
+		}
+		break;
+	
+	case 'update_profile':
+		$logged_in = isset($_SESSION['user_info'][0]) && is_numeric($_SESSION['user_info'][0]['id']) ? true : false;
+		
+		//var_dump($logged_in);
+		if($logged_in) {
+			include_once 'profile.php';
+		} else {
+			header('Location:controller.php?action=login');
 		}
 		break;
 	default:

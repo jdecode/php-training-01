@@ -88,7 +88,7 @@ class mysql extends database {
 				$i++;
 			}
 			$sql .= " WHERE $condition ;";
-			//echo $sql; die;
+			// echo $sql; die;
 			// Run the query
 			if ($result = mysql_query($sql)) {
 				$this->sql_status = true;
@@ -99,6 +99,7 @@ class mysql extends database {
 				return false;
 			}
 		}
+		return false;
 	}
 
 }
