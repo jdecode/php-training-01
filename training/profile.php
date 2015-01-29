@@ -36,10 +36,51 @@
 							</li>
 						</ul>
 						<div class="well">
+							<?php
+							//echo date('Y/d/m', $_SESSION['user_info'][0]['dob']);
+							$year = date('Y', $_SESSION['user_info'][0]['dob']);
+							$month = date('m', $_SESSION['user_info'][0]['dob']);
+							$day = date('d', $_SESSION['user_info'][0]['dob']);
+							?>
 							<form method="POST" action="controller.php?action=update" enctype="multipart/form-data">
 								<input type="text" name="first_name" value="<?php echo $_SESSION['user_info'][0]['first_name']; ?>" placeholder="First Name" /> <br />
 								<input type="text" name="last_name" value="<?php echo $_SESSION['user_info'][0]['last_name']; ?>" placeholder="Last Name" /> <br />
 								<input type="file" name="image1" />
+								<br />
+								<select name="year">
+									<?php
+									for($i = 1960; $i <= date('Y')-18; $i++) {
+										$selected = ($i == $year ? 'selected="selected"' : '');
+									?>
+									<option <?php echo $selected; ?> value="<?php echo $i ?>"><?php echo $i?></option><?php echo "\n";
+									}
+									?>
+								</select>
+								<select name="month">
+									<?php
+									for($i = 1; $i <= 12; $i++) {
+										$mktime = mktime(1, 1, 1, $i, 1, 2015);
+										$selected = ($i == $month ? 'selected="selected"' : '');
+									?>
+									<option <?php echo $selected; ?> value="<?php echo $i ?>"><?php echo date('F', $mktime); ?></option><?php echo "\n";
+									}
+									?>
+								</select>
+								<select name="day">
+									<?php
+									for($i = 1; $i <= 31 ; $i++) {
+										$selected = ($i == $day ? 'selected="selected"' : '');
+									?>
+									<option <?php echo $selected; ?> value="<?php echo $i ?>"><?php echo $i?></option><?php echo "\n";
+									}
+									?>
+								</select>
+								<br />
+								<input type="text" name="phone_number" value="<?php echo $_SESSION['user_info'][0]['phone_number']; ?>" placeholder="+91-987-654-3210" />
+								<br />
+								<input type="text" name="qualification" value="" placeholder="Highest qualification" />
+								<br />
+								<input type="text" name="favorite_movie" value="" placeholder="Your Favorite Movie" />
 								<input type="submit" value="Update" class="btn btn-primary" />
 							</form>
 						</div>

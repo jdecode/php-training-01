@@ -68,6 +68,9 @@ switch ($action) {
 		//echo '<pre>'; print_r($_SESSION['user_info'][0]['id']); die;
 		// This will come up only if the user is already logged in
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
+			
+			//utility::pr($_POST); die;
+			
 			$id = $_SESSION['user_info'][0]['id'];
 
 			//utility::pr($_POST);
@@ -108,15 +111,26 @@ switch ($action) {
 			// Update first name and last name, in users table
 			$first_name = utility::check_var('first_name');
 			$last_name = utility::check_var('last_name');
+			$phone_number = utility::check_var('phone_number');
+
+			$year = utility::check_var('year');
+			$day = utility::check_var('day');
+			$month = utility::check_var('month');
 			
+			$dob = mktime(1, 1, 1, $month, $day, $year);
+
 			if(!empty($first_name) && !empty($last_name)) {
 				$data = array(
 					'first_name' => $first_name,
-					'last_name' => $last_name
+					'last_name' => $last_name,
+					'dob' => $dob,
+					'phone_number' => $phone_number
 						);
 				if($mysql->update('users', $data, "`id` = $id")) {
 					$_SESSION['user_info'][0]['first_name'] = $first_name;
 					$_SESSION['user_info'][0]['last_name'] = $last_name;
+					$_SESSION['user_info'][0]['dob'] = $dob;
+					$_SESSION['user_info'][0]['phone_number'] = $phone_number;
 					header('Location:controller.php?action=dashboard');
 				}
 			}
