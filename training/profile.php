@@ -78,9 +78,10 @@
 								<br />
 								<input type="text" name="phone_number" value="<?php echo $_SESSION['user_info'][0]['phone_number']; ?>" placeholder="+91-987-654-3210" />
 								<br />
-								<input type="text" name="qualification" value="" placeholder="Highest qualification" />
+								<input type="text" name="ud_qualification" value="" placeholder="Highest qualification" />
 								<br />
-								<input type="text" name="favorite_movie" value="" placeholder="Your Favorite Movie" />
+								<input type="text" name="ud_favorite_movie" value="" placeholder="Your Favorite Movie" />
+								<br />
 								<input type="submit" value="Update" class="btn btn-primary" />
 							</form>
 						</div>
