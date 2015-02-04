@@ -77,18 +77,10 @@ class mysql extends database {
 				} else {
 					$sql .= " `$_k` = '$_v', ";
 				}
-				/*
-				  if($first) {
-				  $sql .= "$_k = '$_v' ";
-				  $first = false;
-				  } else {
-				  $sql .= " AND $_k = '$_v' ";
-				  }
-				 */
 				$i++;
 			}
 			$sql .= " WHERE $condition ;";
-			// echo $sql; die;
+			//echo $sql; die;
 			// Run the query
 			if ($result = mysql_query($sql)) {
 				$this->sql_status = true;

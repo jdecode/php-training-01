@@ -1,3 +1,18 @@
+<?php
+$user_details = array(
+	'qualification' => 'Highest Qualification',
+	'favorite_movie' => 'Favorite Movie',
+		);
+$user_details_values = array();
+
+if(count($_SESSION['user_details']) > 0) {
+	foreach($_SESSION['user_details'] as $k => $v) {
+		$user_details_values[$v['key']] = $v['value'];
+	}
+}
+
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -78,10 +93,16 @@
 								<br />
 								<input type="text" name="phone_number" value="<?php echo $_SESSION['user_info'][0]['phone_number']; ?>" placeholder="+91-987-654-3210" />
 								<br />
-								<input type="text" name="ud_qualification" value="" placeholder="Highest qualification" />
-								<br />
-								<input type="text" name="ud_favorite_movie" value="" placeholder="Your Favorite Movie" />
-								<br />
+								<?php
+								if(count($user_details) > 0) {
+									foreach($user_details as $k=>$v) {
+										?>
+										<input type="text" name="ud_<?php echo $k ?>" value="<?php echo $user_details_values[$k] ?>" placeholder="<?php echo $v; ?>" />
+										<br />
+										<?php
+									}
+								}
+								?>
 								<input type="submit" value="Update" class="btn btn-primary" />
 							</form>
 						</div>

@@ -23,6 +23,7 @@ class user {
 			if ($this->mysql->get_number_of_records()) {
 				//User is verfied from the database
 				$_SESSION['user_info'] = $this->mysql->rows();
+				$_SESSION['user_details'] = $this->get_user_details();
 				return true;
 			}
 		}
@@ -103,8 +104,10 @@ class user {
 				$_SESSION['user_info'][0]['phone_number'] = $phone_number;
 				
 				$this->update_extra_fields();
-				
-				header('Location:controller.php?action=dashboard');
+				return true;
+				//header('Location:controller.php?action=dashboard');
+			} else {
+				return false;
 			}
 		}
 	}
@@ -120,9 +123,23 @@ class user {
 				}
 			}
 		}
-		utility::pr($_ud_fields); die;
+
 		$id = $_SESSION['user_info'][0]['id'];
-		
+		if(count($_ud_fields) > 0) {
+			foreach($_ud_fields as $key=>$val) {
+				$this->mysql->update('user_details', array('value'=>$val), "user_id = $id AND `key`='$key'");
+			}
+			$_SESSION['user_details'] = $this->get_user_details();
+		}
 	}
 
+	function get_user_details() {
+		$id = $_SESSION['user_info'][0]['id'];
+		if($this->mysql->select('user_details', "user_id=$id")) {
+			if ($this->mysql->get_number_of_records()) {
+				//User is verfied from the database
+				return $this->mysql->rows();
+			}
+		}
+	}
 }

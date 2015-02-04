@@ -44,7 +44,11 @@ switch ($action) {
 		//echo '<pre>'; print_r($_SESSION['user_info'][0]['id']); die;
 		// This will come up only if the user is already logged in
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$user->update_user();
+			if($user->update_user()) {
+				header('Location:controller.php?action=dashboard');
+			} else {
+				header('Location:controller.php?action=update_profile');
+			}
 		}
 		break;
 	case 'update_profile':
